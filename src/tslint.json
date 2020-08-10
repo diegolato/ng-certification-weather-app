@@ -16,6 +16,8 @@
     ],
     "variable-name": [true, "ban-keywords", "check-format"],
     "no-string-literal": false,
+    "skipBlankLines": true,
+    "ignoreComments": true,
     "object-literal-key-quotes": [
       true,
       "consistent"

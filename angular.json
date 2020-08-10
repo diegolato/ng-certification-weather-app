@@ -120,6 +120,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "ng-certification"
+    }
+  },
+  "defaultProject": "ng-certification",
+  "cli": {
+    "analytics": false
+  }
 }

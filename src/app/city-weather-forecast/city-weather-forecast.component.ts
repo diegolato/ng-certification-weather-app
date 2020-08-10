@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
+import {WeatherApiService} from '../shared/services/weather-api.service';
+import {CityWeatherForecast} from '../shared/models/weather-api.models';
+
+const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+const DAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
 @Component({
   selector: 'app-city-weather-forecast',
@@ -8,11 +13,31 @@ import {ActivatedRoute} from '@angular/router';
 })
 export class CityWeatherForecastComponent implements OnInit {
 
-  constructor(private route: ActivatedRoute) { }
+  zipCodeWeatherForecast: CityWeatherForecast;
+
+  constructor(private route: ActivatedRoute,
+              private weatherApiService: WeatherApiService) { }
 
   ngOnInit(): void {
     const zipcode = this.route.snapshot.params.zipcode;
-    console.log('zipCode', zipcode);
+    this.weatherApiService.getWeatherForecast5DaysByZipCode(zipcode).subscribe(
+      (response) => {
+        this.zipCodeWeatherForecast = response;
+        console.log(response);
+      },
+      (error) => {
+        console.error(error);
+      }
+    );
+  }
+
+  getDateFromTimestamp(dateTimestamp): string {
+    const date = new Date(dateTimestamp * 1000);
+    return DAYS[date.getDay()] + ', ' + MONTHS[date.getMonth()] + ' ' + date.getDate();
+  }
+
+  getWeatherIcon(weatherIconCase: string): string {
+    return this.weatherApiService.getWeatherIcon(weatherIconCase);
   }
 
 }
