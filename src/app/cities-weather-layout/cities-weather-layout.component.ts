@@ -4,7 +4,8 @@ import {OPERATIONS} from '../app.constants';
 import {WeatherApiService} from '../shared/services/weather-api.service';
 import {CityWeatherDetails} from '../shared/models/weather-api.models';
 import {Router} from '@angular/router';
-import {forkJoin} from 'rxjs';
+import {forkJoin, of} from 'rxjs';
+import {catchError, map} from 'rxjs/operators';
 
 const ERROR_MESSAGES = {
   alreadyPresent: "This zip code is already present in list",
@@ -38,13 +39,24 @@ export class CitiesWeatherLayoutComponent implements OnInit {
     const zipCodes = this.localStorageService.getZipCodes();
     const getWeatherApiArray = [];
     zipCodes.forEach((zipCode) => {
-      getWeatherApiArray.push(this.weatherApiService.getWeatherDetailsByZipcode(zipCode));
+      getWeatherApiArray.push(this.weatherApiService.getWeatherDetailsByZipcode(zipCode).pipe(
+        map(
+          (res) => res),
+          catchError(e => of(zipCode))));
     });
     forkJoin(getWeatherApiArray).subscribe(
   (responseList: Array<CityWeatherDetails>) => {
       responseList.forEach((details, index) => {
-        details.zipCode = zipCodes[index];
-        this.currentZipCodesDetails.push(details);
+        if (typeof details === "string") {
+          /*Remove from local storage wrong data*/
+          const operationResult = this.localStorageService.removeZipCode(details);
+          if (operationResult === OPERATIONS.ZIP_CODE_NOT_FOUND) {
+            console.error("Something is wrong");
+          }
+        } else {
+          details.zipCode = zipCodes[index];
+          this.currentZipCodesDetails.push(details);
+        }
       });
     },
   (error) => {
