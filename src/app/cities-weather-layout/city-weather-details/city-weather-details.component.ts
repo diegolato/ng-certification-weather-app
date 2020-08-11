@@ -28,4 +28,8 @@ export class CityWeatherDetailsComponent implements OnInit {
     this.zipCodeToShow.emit(zipCode);
   }
 
+  getCelsiusDegrees(degree: number) {
+    return this.weatherApiService.fromKelvinToCelsius(degree);
+  }
+
 }

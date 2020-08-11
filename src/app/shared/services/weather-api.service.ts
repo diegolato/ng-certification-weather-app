@@ -52,4 +52,8 @@ export class WeatherApiService {
   public getWeatherIcon(weatherMainCase: string): string {
     return "https://www.angulartraining.com/images/weather/" + WEATHER_MAIN[weatherMainCase] + ".png";
   }
+
+  public fromKelvinToCelsius(degree) {
+    return Math.floor(degree - 273.15);
+  }
 }

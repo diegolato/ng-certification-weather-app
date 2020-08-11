@@ -1,12 +1,12 @@
-<div *ngIf="weatherDetails" class="well flex" style="padding: 15px; margin: 15px; border: 1px solid black;">
+<div *ngIf="weatherDetails" class="well flex">
   <div>
     <h3>{{weatherDetails.name}} ({{weatherDetails.zipCode}})</h3>
     <h4>Current conditions: {{weatherDetails.weather[0].main}}</h4>
     <h4>Temperatures today:</h4>
     <p>
-      Current {{weatherDetails.main.temp}}
-      - Max {{weatherDetails.main.temp_max}}
-      - Min {{weatherDetails.main.temp_min}}
+      Current {{getCelsiusDegrees(weatherDetails.main.temp)}}
+      - Max {{getCelsiusDegrees(weatherDetails.main.temp_max)}}
+      - Min {{getCelsiusDegrees(weatherDetails.main.temp_min)}}
     </p>
     <p>
       <a href="javascript:void(0)" (click)="navigateToZipCodeDetails(weatherDetails.zipCode)">Show 5-day forecast {{weatherDetails.name}}</a>

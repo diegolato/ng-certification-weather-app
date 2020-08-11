@@ -10,9 +10,9 @@
       Add location
     </button>
   </div>
-  <div *ngIf="currentZipCodesDetails.length > 0" style="margin-top: 25px;">
-    <app-city-weather-details *ngFor="let zipCodeDetails of currentZipCodesDetails" [weatherDetails]="zipCodeDetails"
-                              (zipCodeToRemove)="removeZipCodeFromLocalStorage($event)"
-                              (zipCodeToShow)="navigateToZipCode($event)"></app-city-weather-details>
-  </div>
+</div>
+<div *ngIf="currentZipCodesDetails.length > 0" style="margin-top: 25px;">
+  <app-city-weather-details *ngFor="let zipCodeDetails of currentZipCodesDetails" [weatherDetails]="zipCodeDetails"
+                            (zipCodeToRemove)="removeZipCodeFromLocalStorage($event)"
+                            (zipCodeToShow)="navigateToZipCode($event)"></app-city-weather-details>
 </div>

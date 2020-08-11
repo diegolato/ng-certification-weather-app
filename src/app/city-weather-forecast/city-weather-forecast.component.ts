@@ -40,4 +40,8 @@ export class CityWeatherForecastComponent implements OnInit {
     return this.weatherApiService.getWeatherIcon(weatherIconCase);
   }
 
+  getCelsiusDegrees(degree: number) {
+    return this.weatherApiService.fromKelvinToCelsius(degree);
+  }
+
 }
