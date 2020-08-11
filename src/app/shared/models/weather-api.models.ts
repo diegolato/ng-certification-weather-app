@@ -60,6 +60,7 @@ export class City {
   name: string;
   population: number;
   timezone: number;
+  zipCode: string;
 }
 
 export class FeelsLike {

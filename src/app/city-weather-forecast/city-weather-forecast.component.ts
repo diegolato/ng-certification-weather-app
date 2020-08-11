@@ -23,6 +23,7 @@ export class CityWeatherForecastComponent implements OnInit {
     this.weatherApiService.getWeatherForecast5DaysByZipCode(zipcode).subscribe(
       (response) => {
         this.zipCodeWeatherForecast = response;
+        this.zipCodeWeatherForecast.city.zipCode = zipcode;
         console.log(response);
       },
       (error) => {
